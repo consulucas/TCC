@@ -10,7 +10,7 @@
       integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
       crossorigin="anonymous"
     />
-    <title>Document</title>
+    <title>GKPartner</title>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -36,15 +36,28 @@
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="?page=novo">Novo Funcionario</a></li>
-            <li><a class="dropdown-item" href="#">Listar Funcionarios</a></li>  
+            <li><a class="dropdown-item" href="?page=listar">Listar Funcionarios</a></li>  
           </ul>
         </li>
-        <a class="nav-link active" href="#">Novo Cartão Ponto</a>
+        <li class="nav-item dropdown">  
+          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Cartão Ponto
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="?page=criarcp">Novo Cartão Ponto</a></li>
+            <li><a class="dropdown-item" href="?page=buscaimprimecp">Imprimir Cartão Ponto</a></li> 
+            <li><a class="dropdown-item" href="?page=buscacp">Buscar Cartão Ponto</a></li>  
+          </ul>
+        </li>
+        
+           
+        <a class="nav-link active" href="?page=criarempresa">Nova empresa</a>
             <li class="nav-item dropdown">
           </div>
         </div>
       </div>
     </nav>
+   
     <div class="container">
       <div class="row">
         <div class="col mt-5">
@@ -55,12 +68,46 @@
               include("criar-funcionario.php");
               break;
               case "listar":
-                include("listar-usuario.php");
+                include("listar-funcionario.php");
                 break;
               case "salvar":
                 include("salvar-funcionario.php");
                 break;
+                case "editar":
+                  include("editar-funcionario.php");
+                  break;
+                  case "salvarcp":
+                    include("salvar-cp.php");
+                    break;
+                case "criarcp":
+                  include("criar-cp.php");
+                  break;
+                case "gerarcp":
+                  include("gerar-cp.php");
+                  break;
+                  case "imprimircp":
+                    include("imprimir-cp.php");
+                    break;
+                  case "salvarempresa":
+                    include("salvar-empresa.php");
+                    break;
+                case "criarempresa":
+                  include("criar-empresa.php");
+                  break;
+                  case "buscacp":
+                    include("buscar_cp.php");
+                    break;
+                    case "buscacptotal":
+                      include("buscar_cp_total.php");
+                      break;
+                case "editarcp":
+                  include("editarcp.php");
+                  break;
+                  case "buscaimprimecp":
+                    include("busca_imprime_cp.php");
+                    break;
                 default:
+                
                 print "<h1>Bem vindos</h1>";
           }
           

@@ -16,38 +16,21 @@
    
     
       <h1>Novo Funcionario</h1>
-      <form action="?page=salvar" method ="POST">
+      <form action="?page=salvarempresa" method ="POST">
         <input type="hidden" name="acao" value="cadastrar">
       <div class="mb-3">
         
-        <label for="Nome">Nome</label>
-        <input type="text" name="nome" id="" class="form-control">
+        <label for="Nome">Nome da empresa</label>
+        <input type="text" name="nome_empresa" id="" class="form-control">
       </div>
       <div class="mb-3">
+      <div class="mb-3">
         
-        <label for="sobrenome">Sobrenome</label>
-        <input type="text" name="sobrenome" id="" class="form-control">
+        <label for="Nome">CNPJ da empresa</label>
+        <input type="text" name="cnpj" id="" class="form-control">
       </div>
-     
-      <div class="mb-3">
-        
-        <label for="id_cargo_funcionario">Cargo</label>
-        <select name="id_cargo_funcionario" class="form-control" >
-          <?php
-          $sql = "SELECT * FROM cargo";
-          $res = $conn->query($sql);
-          while($row = $res->fetch_object()){
-            print "<option value='".$row->id_cargo."'>";
-            print $row->nome_cargo."</option>";
-          }
-          ?>
-          </select>
-      </div>     
-      <div class="mb-3">
-       
-       <label for="data_adm">Data de admissão</label>
-       <input type="date" name="data_inicio" id="" class="form-control">
-     </div>
+      <div class="mb-3">  
+      
       <div class="mb-3">
        <button type="submit" class="btn btn-primary">Enviar</button>
       </div>
