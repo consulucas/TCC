@@ -36,6 +36,7 @@ $sql="SELECT * FROM dia WHERE data LIKE '%$data%' and id_func LIKE '$nome'";
     print "<th>Fim turno</th>";
     print "<th>Nome</th>";
     print "<th>Empresa</th>";
+    print "<th>Observação</th>";
     print "<th></th>";
     print "</tr>";
     print "</thead>";
@@ -46,13 +47,13 @@ $sql="SELECT * FROM dia WHERE data LIKE '%$data%' and id_func LIKE '$nome'";
       //print "<td>".$row->data."</td>";
       $dia=date('d/m/Y',strtotime($row->data));
       print "<td>".$dia."</td>";
-      if($row->inicio_turno==0){
+      if($row->ini=="00:00"){
         print "<td>"."FOLGA"."</td>";
       }else{
-      print "<td>".$row->inicio_turno.":00"."</td>";}
-      print "<td>".$row->inicio_intervalo.":00"."</td>";
-      print "<td>".$row->final_intervalo.":00"."</td>";
-      print "<td>".$row->final_turno.":00"."</td>";
+        print "<td>".$inii=date('H:i',strtotime($row->ini))."</td>";}
+        print "<td>".$inii=date('H:i',strtotime($row->inicio_intervalo))."</td>";
+        print "<td>".$inii=date('H:i',strtotime($row->final_intervalo))."</td>";
+        print "<td>".$inii=date('H:i',strtotime($row->fim))."</td>"; 
        print "<td>".$nome_func."</td>";
         $id_emp=$row->id_emp;         
      $sql1='SELECT * FROM empresa ';
@@ -63,7 +64,17 @@ $sql="SELECT * FROM dia WHERE data LIKE '%$data%' and id_func LIKE '$nome'";
                 $nome_empresa=$row1->nome_empresa;
               }
             }          
-       print "<td>".$nome_empresa."</td>";         
+       print "<td>".$nome_empresa."</td>";  
+       $id_obs=$row->id_obs;
+       $sql1='SELECT * FROM observacao ';
+       $res1 = $conn->query($sql1);
+       $row1 = $res1->fetch_object();
+       while($row1 = $res1->fetch_object()){
+         if($row1->id==$id_obs){
+           $tipo=$row1->tipo;
+         }
+       }   
+       print "<td>".$tipo."</td>";        
       print "<td>
             
             <button onclick=\"location.href='?page=editarcp&id_dia=".$row->id_dia."';\" class = 'btn btn-success'>Editar</button>

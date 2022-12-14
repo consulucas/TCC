@@ -14,7 +14,7 @@ echo $sql;
       <div class="mb-3">
         
         <label for="hr_ini">Hora Entrada</label>
-        <input type="text" name="hr_ini" id="" value="<?php print $row->inicio_turno;?>" class="form-control">
+        <input type="text" name="hr_ini" id="" value="<?php print $row->ini;?>" class="form-control">
       </div>
       <div class="mb-3">
         
@@ -25,12 +25,12 @@ echo $sql;
       <div class="mb-3">
         
         <label for="fim_int">Fim Intervalo</label>
-        <input type="text" name="fim_int" id="" value="<?php print $row->inicio_intervalo;?>"class="form-control">
+        <input type="text" name="fim_int" id="" value="<?php print $row->final_intervalo;?>"class="form-control">
       </div>
       <div class="mb-3">
         
         <label for="hr_fim">Hora saida</label>
-        <input type="text" name="hr_fim" id="" value="<?php print $row->inicio_intervalo;?>"class="form-control">
+        <input type="text" name="hr_fim" id="" value="<?php print $row->fim;?>"class="form-control">
       </div>
       
 
@@ -44,6 +44,21 @@ echo $sql;
           while($row = $res->fetch_object()){
             print "<option value='".$row->id_empresa."'>";
             print $row->nome_empresa."</option>";
+          }
+          ?>
+          </select>
+      </div>   
+      
+      <div class="mb-3">
+        
+        <label for="id_obs">Observações</label>
+        <select name="id_obs" class="form-control" >
+          <?php
+          $sql = "SELECT * FROM observacao";
+          $res = $conn->query($sql);
+          while($row = $res->fetch_object()){
+            print "<option value='".$row->id."'>";
+            print $row->tipo."</option>";
           }
           ?>
           </select>

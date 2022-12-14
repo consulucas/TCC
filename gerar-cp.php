@@ -38,9 +38,32 @@ $nome_empresa=$_POST["nome_empresa"];
 $escala=$_POST["escala"];
 $turno=$_POST["turno"];
 $data=$_POST["data_cp"];
-
-
-//$sql='SELECT * FROM empresa';
+$ini=$_POST["ini"];
+$fim=$_POST["fim"];
+if($turno==1){
+  $ini="07:00";
+  $fim="19:00";
+}
+if($turno==2){
+  $ini="19:00";
+  $fim="07:00";
+}
+if($turno==3){
+  $ini="08:00";
+  $fim="17:00"; 
+}
+if($turno==4){
+  $ini="07:00";
+  $fim="17:00";
+}
+if($turno==5){
+  $ini="08:00";
+  $fim="12:00"; 
+}
+if($turno==6){
+  $ini="13:30";
+  $fim="17:30"; 
+}
 
 $sql='SELECT * FROM empresa ';
 $res = $conn->query($sql);
@@ -63,8 +86,19 @@ while($row = $res->fetch_object()){
     $id_funcionario=$row->id_funcionario;
   }
 }
-print $id_empresa;
-print $id_funcionario;
+$sql2='SELECT * FROM observacao ';
+$res = $conn->query($sql2);
+$row = $res->fetch_object();
+while($row = $res->fetch_object()){
+ // print "<option value='".$row->id."'>";
+// print $row->tipo."</option>";
+  if($row->id==8){
+   //print $row->id;
+    //$id_obs=$row->id;
+  }
+}
+
+print// $id_obs;
 /*
 
 */
@@ -102,7 +136,6 @@ echo "<img src=\"/img/logo.png\" alt=\"\" width="."130"." height="."100"."/>";
 echo "</div>";
 echo "<div align=left >";
     echo "Funcionario : ".$nome."<br>";
-    echo "Escala : 12x36<br>";
     $sql = "SELECT * FROM funcionario AS A INNER JOIN cargo AS B ON A.id_cargo_funcionario = B.id_cargo";
     $res = $conn->query($sql);
     $row = $res->fetch_object();
@@ -127,6 +160,9 @@ echo "<div align=left >";
     $ini_int=0;
     $fim_int=0;
     $hr_saida=0;
+    $guarda_ini=$ini;
+    $guarda_fim=$fim;
+   // $guarda_id=$id_obs;
     str_pad( $cont_dias , 1 , '0' , STR_PAD_LEFT);
     //echo "<div class="."container-fluid".">";
     print "<div class="."meio".">";
@@ -148,12 +184,265 @@ echo "<div align=left >";
     $dia_semana = ucfirst(utf8_encode(strftime("%a", strtotime($ano . '-' . $mes . '-' . $cont_dias))));
       print "<tr>";
         print "<td>". str_pad( $cont_dias , 2 , '0' , STR_PAD_LEFT) ." - ". $dia_semana ."</td>";
-          if($escala==2) 
+        if($escala==1)
+        {
+           
+            $ini=$guarda_ini;
+            $fim=$guarda_fim;
+           // $id_obs=$guarda_id;
+            // ESCALA 12*36
+            if($cont_w % 2 ==0 ){            
+                print "<td>".$ini."</td>";
+                $cont_d++; 
+                $id_obs="10";
+               // $id_obs=null; 
+              }else{
+                 $ini="00:00";             
+                 $id_obs="8";
+                print "<td>"."FOLGA"."</td>";
+              $cont_folga++;
+              }
+              if($cont_w % 2 ==0 ){
+                $ini_int='00:00';
+                print "<td>"." "."</td>";
+              }else{
+               
+              // print "<td>"."Folga"."</td>";
+              
+              }
+              if($cont_w % 2 ==0 ){
+                $fim_int='00:00';
+              print "<td>"." "."</td>";
+              }else{
+              // print "<td>"."Folga"."</td>";
+             
+              }
+              if($cont_w % 2 ==0 ){     
+                  print "<td>".$fim."</td>";             
+              }else{
+               $fim="00:00";
+              // print "<td>"."Folga"."</td>";
+            
+              }
+              if($cont_w % 2 ==0 ){
+               
+                //  $soma_hora=($hr_entrada_soma-$hr_saida_soma);
+                print "<td>"." "." Horas"."</td>";   
+
+              }else{
+              // print "<td>"."Folga"."</td>";
+              
+              }
+              if($cont_w % 2 ==0 ){
+                print "<td>".$nome_empresa."</td>";
+              }else{
+              //  print "<td>"."Folga"."</td>";
+              
+              }
+        
+              print "</tr>";
+            
+              $cont_dias++;
+              $cont_w++;
+              
+            }
+        if($escala==2)
+        {
+          $ini=$guarda_ini;
+          $fim=$guarda_fim;
+            // ESCALA 12*36 folga
+            if($cont_w % 2 ==1 ){
+                 print "<td>".$ini."</td>";   
+                $cont_d++;  
+                $id_obs="10";          
+              }else{
+                $id_obs="8";
+               $ini="00:00";
+                print "<td>"."FOLGA"."</td>";
+              $cont_folga++;
+              }
+              if($cont_w % 2 ==1 ){
+                $ini_int='00:00';
+                print "<td>"." "."</td>";
+              }else{
+               
+              // print "<td>"."Folga"."</td>";
+              
+              }
+              if($cont_w % 2 ==1 ){
+                $fim_int='00:00';
+              print "<td>"." "."</td>";
+              }else{
+              // print "<td>"."Folga"."</td>";
+              
+              }
+              if($cont_w % 2 ==1 ){
+                
+                  print "<td>".$fim."</td>";
+                
+                
+              }else{
+               $fim="00:00";
+              // print "<td>"."Folga"."</td>";
+            
+              }
+              if($cont_w % 2 ==1 ){
+               
+                //  $soma_hora=($hr_entrada_soma-$hr_saida_soma);
+                print "<td>"." "." Horas"."</td>";
+                
+         
+              }else{
+              // print "<td>"."Folga"."</td>";
+              
+              }
+              if($cont_w % 2 ==1 ){
+                print "<td>".$nome_empresa."</td>";
+              }else{
+            // print "<td>"."Folga"."</td>";
+              
+              }
+            
+              print "</tr>";
+         
+              $cont_dias++;
+              $cont_w++;
+             
+              
+            }
+        
+        if($escala==3) 
+          {  
+            $ini=$guarda_ini;
+            $fim=$guarda_fim;
+              if($day==0 )
+              {
+                $id_obs="8";
+                 $ini="00:00";
+               //  $id_obs="8";
+                 print "<td>"."FOLGA"."</td>";
+               //  print "<td>"." "."</td>";
+                // print "<td>"." "."</td>";
+               //  print "<td>"." "."</td>";
+               //  print "<td>"." "."</td>";
+               //  print "<td>"." "."</td>";
+ 
+                 $cont_folga++;      
+              }
+               elseif($day==6)
+               {
+                $id_obs="8";
+                $ini="00:00";
+              //  $id_obs="8";
+                 print "<td>"."FOLGA"."</td>";
+               //  print "<td>"." "."</td>";
+               //  print "<td>"." "."</td>";
+                // print "<td>"." "."</td>";
+                // print "<td>"." "."</td>";
+               //  print "<td>"." "."</td>";
+ 
+                 $cont_folga++;      
+               }
+                else
+                {
+
+                  $id_obs="10";
+                 print "<td>".$ini."</td>";
+                 
+                 
+                 $cont_d++;
+                
+                 }
+ 
+              if($day==0 )
+              {
+                $ini_int="00:00";
+             //   print "<td>"."O"."</td>";
+              }
+               elseif($day==6)
+               {
+                $ini_int="00:00";
+                  
+                   
+               }
+                else
+                {
+                     $ini_int='12:00'; 
+                     print "<td>".$ini_int."</td>";
+                   
+                }
+                 
+               if($day==0 )
+               {
+                 $fim_int="00:00";
+               //   print "<td>"."L"."</td>";
+               }
+                elseif($day==6)
+                {
+                 $fim_int="00:00";
+                             
+                }
+                 else
+                 {
+                     $fim_int='13:00';                  
+                     print "<td>".$fim_int."</td>";                 
+                 }
+               if($day==0 )
+               {
+                 $fim="00:00";
+               //    print "<td>"."G"."</td>";
+               }
+                elseif($day==6)
+                {
+                  $fim="00:00";
+                                    
+                 }
+                  else
+                  {
+                    
+                     print "<td>".$fim."</td>";                 
+                   }
+                   if($day==0 ){
+               
+                    //  $soma_hora=($hr_entrada_soma-$hr_saida_soma);
+                   // print "<td>"." "." Horas"."</td>";
+                  }
+                  elseif($day==6)
+                  {
+                  //  print "<td>"." "." Horas"."</td>";
+                  }else{
+                  // print "<td>"."Folga"."</td>";
+                  print "<td>"." "." Horas"."</td>";
+                  }
+                  if($day==0 ){
+                   
+                  }
+                  elseif($day==6)
+                  {
+
+                  }else{
+                // print "<td>"."Folga"."</td>";
+                print "<td>".$nome_empresa."</td>";
+                  }
+          
+          
+          print "</tr>";
+          $cont_dias++;
+              $cont_w++;
+                }
+       if($escala==4) 
           { 
+            $ini=$guarda_ini;
+            $fim=$guarda_fim;
+            //INICIO TURNO
              if($day==0 )
              {
+              $id_obs="8";
+              $ini="00:00";
                 $hr_entrada='FOLGA';
+                //$id_obs="8";
                 print "<td>".$hr_entrada."</td>";
+               // print "<td>".$hr_entrada."</td>";
                 print "<td>"." "."</td>";
                 print "<td>"." "."</td>";
                 print "<td>"." "."</td>";
@@ -164,90 +453,97 @@ echo "<div align=left >";
              }
               elseif($day==6)
               {
-              $hr_entrada='08:00';
-              $hr_entrada_soma=8;
-              print "<td>".$hr_entrada."</td>";
+             
+                $id_obs="10";
               
+              print "<td>".$ini."</td>";
               $cont_d++;
               $cont_horas=$cont_horas+4;
               }
                else
                {
-                $hr_entrada='08:00';
+                $id_obs="10";
                 $hr_entrada_soma=8;
-                print "<td>".$hr_entrada."</td>";
+                print "<td>".$ini."</td>";
                 
                 
                 $cont_d++;
                 $cont_horas=$cont_horas+8;
                 }
-
+                  //INICIO DE TURNO//
+                  //INICIO INTERVALO
              if($day==0 )
              {
-              $ini_int='FOLGA';
+
+              $ini_int="00:00";
             //   print "<td>"."O"."</td>";
              }
               elseif($day==6)
               {
-                $ini_int='0';
+                $ini_int="00:00";
                   print "<td>"." "."</td>";
                   
               }
                else
                {
-                    $ini_int='12:00';
+                    $ini_int="12:00";
                     $ini_int_soma=12;
                     print "<td>".$ini_int."</td>";
                   
                }
-                
+                //INICIO INTERVALO//
+                //FIM INTERVALO
               if($day==0 )
               {
-                $fim_int='FOLGA';
+               
+                $fim_int='00:00';
               //   print "<td>"."L"."</td>";
               }
                elseif($day==6)
                {
-                $fim_int='0';
+                
+                $fim_int='00:00';
                   print "<td>"." "."</td>";               
                }
                 else
                 {
+
                     $fim_int='13:00';
                     $fim_int_soma=13;
                     print "<td>".$fim_int."</td>";                 
                 }
+                //FIM INTERVALO//
+                //FIM TURNO
               if($day==0 )
               {
-                $hr_saida='FOLGA';
+                $fim="00:00";
               //    print "<td>"."G"."</td>";
               }
                elseif($day==6)
                {
-                  $hr_saida='12:00';
-                  $hr_saida_soma=12;
-                  print "<td>".$hr_saida."</td>";                  
+                $fim="12:00";
+                  print "<td>".$fim."</td>";                  
                 }
                  else
                  {
-                    $hr_saida='17:00';
-                    $hr_saida_soma=17;
-                    print "<td>".$hr_saida."</td>";                 
+                  $fim="17:00";
+                    print "<td>".$fim."</td>";                 
                   }
+                  //FIM TURNO//
               if($day==0 )
               {
               //    print "<td>"." "."</td>";
               }
                elseif($day==6)
                {
-                  $soma_hora=($hr_saida_soma-$hr_entrada_soma);
-                  print "<td>".$soma_hora." Horas"."</td>";
+                //  $soma_hora=($hr_saida_soma-$hr_entrada_soma);
+                print "<td>"." "." Horas"."</td>";
                 // print "<td>"."04 horas"."</td>";
                }
                 else
                 {
-                    $soma_hora=($hr_saida_soma-$hr_entrada_soma);
-                    print "<td>".$soma_hora." Horas"."</td>";
+                 //   $soma_hora=($hr_saida_soma-$hr_entrada_soma);
+                 print "<td>"." "." Horas"."</td>";
                   // print "<td>"."09 horas"."</td>";
                 }
               if($day==0 )
@@ -263,129 +559,30 @@ echo "<div align=left >";
                     print "<td>".$nome_empresa."</td>";
                 }
                 $cont_dias++;
-          }
-        if($escala==1)
-        {
-            // ESCALA 12*36
-            if($cont_w % 2 ==0 ){
-              if($turno==1)
-              {
-                $hr_entrada='07:00';
-                $hr_entrada_soma=7;
-                print "<td>".$hr_entrada."</td>";
-              }
-              if($turno==2)
-              {
-                $hr_entrada='19:00';
-                $hr_entrada_soma=19;
-                print "<td>".$hr_entrada."</td>";
-                
-              }
-                $cont_d++;
-                $cont_horas=$cont_horas+12;
-              }else{
-                $hr_entrada='FOLGA';
-                print "<td>"."FOLGA"."</td>";
-              $cont_folga++;
-              }
-              if($cont_w % 2 ==0 ){
-                $ini_int='0';
-                print "<td>"." "."</td>";
-              }else{
-                $ini_int='FOLGA';
-              // print "<td>"."Folga"."</td>";
               
-              }
-              if($cont_w % 2 ==0 ){
-                $fim_int='0';
-              print "<td>"." "."</td>";
-              }else{
-              // print "<td>"."Folga"."</td>";
-              $fim_int='FOLGA';
-              }
-              if($cont_w % 2 ==0 ){
-                if($turno==1){
-                  $hr_saida='19:00';
-                  $hr_saida_soma=19;
-                  print "<td>".$hr_saida."</td>";
-              
-                }
-                if($turno==2){
-                  $hr_saida='07:00';
-                  $hr_saida_soma=7;
-                  print "<td>".$hr_saida."</td>";
-                
-                  }
-              }else{
-                $hr_saida='FOLGA';
-              // print "<td>"."Folga"."</td>";
-            
-              }
-              if($cont_w % 2 ==0 ){
-                if($turno==1){
-                  $soma_hora=($hr_saida_soma-$hr_entrada_soma);
-                print "<td>".$soma_hora." Horas"."</td>";
-              
-                }
-                if($turno==2){
-                  $soma_hora=($hr_entrada_soma-$hr_saida_soma);
-                print "<td>".$soma_hora." Horas"."</td>";
-                
-              
-              // print "<td>"."12 horas"."</td>";
-
-              }else{
-              // print "<td>"."Folga"."</td>";
-              
-              }
-              if($cont_w % 2 ==0 ){
-                print "<td>".$nome_empresa."</td>";
-              }else{
-              //  print "<td>"."Folga"."</td>";
-              
-              }
-            }
               print "</tr>";
-            // print $day;
-             
-              
-            //	echo "" . $cont_dias ."  ". $dia_semana . "<br>";
-              $cont_dias++;
-              $cont_w++;
-              //$cont_horas=$cont_horas+12;
-              //Imprimir o dia da semana
-              //http://php.net/manual/pt_BR/function.strftime.php
-              
-        }//echo   $dia_semana . "<br>";
+          }
+        //echo   $dia_semana . "<br>";
 			
        // id_dia,	data,	inicio_turno,	inicio_intervalo,	final_intervalo,	final_turno,	id_func,	id_emp,
-      
-       $sql = "INSERT INTO dia ( data, inicio_turno, inicio_intervalo, final_intervalo, final_turno,	id_func,	id_emp) VALUES (
+    
+       $sql = "INSERT INTO dia ( data, ini, inicio_intervalo, final_intervalo, fim, id_func,	id_emp, id_obs ) VALUES (
           '{$date}', 
-          '{$hr_entrada}', 
+          '{$ini}',
           '{$ini_int}', 
           '{$fim_int}', 
-          '{$hr_saida}', 
+          '{$fim}',
           '{$id_funcionario}', 
-          '{$id_empresa}')";
+          '{$id_empresa}',
+          '{$id_obs}'
+          )";
    
        $res = $conn->query($sql);
       
       
-      
-      
-  /*     $query_dias="INSERT INTO dia ( data, inicio_turno, inicio_intervalo, final_intervalo, final_turno,	id_func,	id_emp) VALUES (:data, :inicio_turno, :inicio_intervalo, :final_intervalo, :final_turno,	:id_func,	:id_emp )";
-        $cad_dias=$conn->prepare($query_dias);
-        $cad_dias->bindParam(':data',$date);
-        $cad_dias->bindParam(':inicio_turno',$hr_entrada);
-        $cad_dias->bindParam(':inicio_intervalo',$ini_int);
-        $cad_dias->bindParam(':final_intervalo',$fim_int);
-        $cad_dias->bindParam(':final_turno',$hr_saida);
-        $cad_dias->bindParam(':id_func',$id_funcionario);
-        $cad_dias->bindParam(':id_emp',$id_empresa);
-        $cad_dias->execute();
-        */
-	  }
+     //  '{$id_obs}'
+      // id_obs
+      }
     print "</table>";
     echo "</div>";
     

@@ -53,27 +53,49 @@
         <label for="Escala">Escala</label>
         <select name="escala" class="form-select" aria-label="Default select example">
         <option selected>Escolha a Escala</option>
-        <option value="1">12 X 36</option>
-        <option value="2"> 6 X 1</option>
-      
+        <?php
+          $sql = "SELECT * FROM escala";
+          $res = $conn->query($sql);
+          while($row = $res->fetch_object()){
+            print "<option value='".$row->id_escala."'>";
+            print $row->nome_escala."</option>";
+          }
+          ?>
+
+       
+       
       </select>
       </div>
-     
-      <div class="mb-3">
+      <div class="row mb-3">
+      <div class="col-4 col-s-12">
       <label for="Turno">Turno</label>
       <select name="turno" class="form-select" aria-label="Default select example">
-        <option selected>Escolha o Turno</option>
+        <option value="0">Escolha o Turno</option>
         <option value="1">07:00 / 19:00</option>
         <option value="2">19:00 / 07:00</option>
         <option value="3">08:00 / 17:00</option>
+        <option value="4">07:00 / 17:00</option>
+        <option value="5">08:00 / 12:00</option>
+        <option value="6">13:30 / 17:30</option>
       </select>
       </div>    
 
+     <div class="col-4 col-s-12">
+       
+       <label for="ini">Inicio Turno</label>
+       <input type="time" name="ini" id="" class="form-control">
+       </div>
+       <div class="col-4 col-s-12">
+       <label for="fim">Fim Turno</label>
+       <input type="time" name="fim" id="" class="form-control">
+     </div>
+     </div>
       <div class="mb-3">
        
        <label for="data_adm">Data do Cartão Ponto</label>
        <input type="date" name="data_cp" id="" class="form-control">
      </div>
+    
       <div class="mb-3">
        <button type="submit" class="btn btn-primary">Enviar</button>
       </div>

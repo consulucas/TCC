@@ -44,15 +44,16 @@ switch ($_REQUEST["acao"]) {
     $ini_int = $_POST["ini_int"];
     $fim_int = $_POST["fim_int"];
     $fim_turn = $_POST["hr_fim"];
-    
     $id_emp = $_POST["id_emp"];
+    $id_obs = $_POST["id_obs"];
 
     $sql = "UPDATE dia SET
-                    inicio_turno='{$ini_turn}',
+                    ini='{$ini_turn}',
                     inicio_intervalo='{$ini_int}',
                     final_intervalo='{$fim_int}',
-                    final_turno='{$fim_turn}',
-                    id_emp='{$id_emp}'
+                    fim='{$fim_turn}',
+                    id_emp='{$id_emp}',
+                    id_obs='{$id_obs}'
                     WHERE
                     id_dia=".$_REQUEST["id_dia"];
                     

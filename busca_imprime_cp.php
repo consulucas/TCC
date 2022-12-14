@@ -22,7 +22,7 @@
         <label for="Nome">Nome</label>
         <select name="nome" class="form-control" >
         <?php
-          $sql = "SELECT * FROM funcionario";
+          $sql = "SELECT * FROM funcionario order by nome";
           $res = $conn->query($sql);
           while($row = $res->fetch_object()){
             print "<option value='".$row->id_funcionario."'>"; 

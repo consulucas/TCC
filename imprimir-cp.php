@@ -81,7 +81,9 @@ echo "<div align=left >";
     $row = $res->fetch_object();
     while($row = $res->fetch_object()){
       if($row->id_cargo_funcionario==$row->id_cargo){
-        $cargo_func=$row->nome_cargo;
+       // $cargo_func=$row->nome_cargo;
+       $cargo_func="Auxiliar de Serviços Gerais";
+       //$cargo_func="Zelador";
       }
     }
     echo"Cargo : ".$cargo_func."<br>";
@@ -119,18 +121,19 @@ echo "<div align=left >";
           print "<th>Saída</th>";  
          // print "<th>Horas Dia</th>";
           print "<th>Cliente</th>";
+          print "<th>Observação</th>";
         print "</tr>";
         while($row = $res->fetch_object()){
       print "<tr>";
       $dia=date('d',strtotime($row->data));
       print "<td>".$dia."</td>";   
-      if($row->inicio_turno==0){
+      if($row->ini=="00:00:00"){
         print "<td>"."FOLGA"."</td>";
       }else{
-      print "<td>".$row->inicio_turno.":00"."</td>";}
-      print "<td>".$row->inicio_intervalo.":00"."</td>";
-      print "<td>".$row->final_intervalo.":00"."</td>";
-      print "<td>".$row->final_turno.":00"."</td>"; 
+      print "<td>".$inii=date('H:i',strtotime($row->ini))."</td>";}
+      print "<td>".$inii=date('H:i',strtotime($row->inicio_intervalo))."</td>";
+      print "<td>".$inii=date('H:i',strtotime($row->final_intervalo))."</td>";
+      print "<td>".$inii=date('H:i',strtotime($row->fim))."</td>"; 
       $id_emp=$row->id_emp;
               $sql1='SELECT * FROM empresa ';
               $res1 = $conn->query($sql1);
@@ -141,7 +144,16 @@ echo "<div align=left >";
                 }
               }      
       print "<td>".$nome_empresa."</td>";        
-       
+      $id_obs=$row->id_obs;
+      $sql1='SELECT * FROM observacao ';
+      $res1 = $conn->query($sql1);
+      $row1 = $res1->fetch_object();
+      while($row1 = $res1->fetch_object()){
+        if($row1->id==$id_obs){
+          $tipo=$row1->tipo;
+        }
+      }   
+      print "<td>".$tipo."</td>";   
 			print "</tr>";
         }
     print "</table>";
@@ -199,18 +211,18 @@ echo "<div align=left >";
    echo "<div class="."right".">";
    echo "Assinatura funcionario:__________________________________________________________________________";
    echo "</div>";
-    print "<hr>";
-    echo "<div class="."flex".">";
-    echo "<div>";
-    echo "Total de horas mês: "."$cont_horas"." Horas";
-    echo "</div>";
-    echo "<div>";
-    echo "Total de dias trabalhados: "."$cont_d"." Dias";
-    echo "</div>";
-    echo "<div>";
-    echo "Total de dias de folga: "."$cont_folga"." Dias";
-    echo "</div>";
-    echo "</div>";
+   // print "<hr>";
+   // echo "<div class="."flex".">";
+   // echo "<div>";
+   // echo "Total de horas mês: "."$cont_horas"." Horas";
+    //echo "</div>";
+   // echo "<div>";
+    //echo "Total de dias trabalhados: "."$cont_d"." Dias";
+    //echo "</div>";
+    //echo "<div>";
+    //echo "Total de dias de folga: "."$cont_folga"." Dias";
+    //echo "</div>";
+    //echo "</div>";
     //<input type="hidden" name="acao" value="cadastrar">
     //$data;
 
